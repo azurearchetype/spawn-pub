@@ -19,10 +19,7 @@ Invoke-WebRequest -Uri $installerUrlBicep -OutFile $installerPathBicep
 Start-Process -FilePath msiexec.exe -ArgumentList "/i $installerPathBicep /quiet" -Wait
 
 # Clean up the installer file
-# Remove-Item -Path $installerPath
+# Remove-Item -Path $installerPathBicep
 
 Write-Output "Bicep Extensions have been installed successfully in $installDirBicep"
 
-
-# create local directory
-# New-Item -path "C:\Bicep" -ItemType Directory

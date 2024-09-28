@@ -7,7 +7,7 @@ if (-Not (Test-Path -Path $installDir)) {
 }
 
 # Define the URL for the Azure CLI installer
-$installerUrl = "https://aka.ms/installazurecliwindows"
+$installerUrl = "https://aka.ms/installazurecliwindowsx64"
 
 # Define the path for the installer
 $installerPath = "$installDir\AzureCLI.msi"

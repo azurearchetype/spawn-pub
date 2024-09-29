@@ -17,7 +17,7 @@ Invoke-WebRequest -Uri $installerUrlBicep -OutFile $installerPathBicep
 
 # Install Bicep
 Start-Process -FilePath $installerPathBicep -ArgumentList "/S" -Wait
-Invoke-Expression "az bicep install"
+az bicep install
 
 # Clean up the installer file
 # Remove-Item -Path $installerPathBicep

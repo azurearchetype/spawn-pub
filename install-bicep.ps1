@@ -1,5 +1,5 @@
 # Define the directory where Bicep will be installed
-$installDirBicep = "C:\Bicep"
+$installDirBicep = "$env:USERPROFILE\.azure\bin"
 
 # Create the directory if it doesn't exist
 if (-Not (Test-Path -Path $installDirBicep)) {
@@ -10,14 +10,14 @@ if (-Not (Test-Path -Path $installDirBicep)) {
 $installerUrlBicep = "https://github.com/Azure/bicep/releases/latest/download/bicep-win-x64.exe"
 
 # Define the path for the installer
-$installerPathBicep = "$installDirBicep\bicep-win-x64.exe"
+$installerPathBicep = "$installDirBicep\bicep.exe"
 
 # Download the installer
 Invoke-WebRequest -Uri $installerUrlBicep -OutFile $installerPathBicep
 
 # Install Bicep
-Start-Process -FilePath $installerPathBicep -ArgumentList "/S" -Wait
-az bicep install
+#Start-Process -FilePath $installerPathBicep -ArgumentList "/S" -Wait
+#az bicep install
 
 # Clean up the installer file
 # Remove-Item -Path $installerPathBicep

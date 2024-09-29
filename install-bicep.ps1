@@ -6,7 +6,7 @@ if (-Not (Test-Path -Path $installDirBicep)) {
     New-Item -ItemType Directory -Path $installDirBicep
 }
 
-# Define the URL for the Azure CLI installer
+# Define the URL for the Bicep installer
 $installerUrlBicep = "https://github.com/Azure/bicep/releases/latest/download/bicep-win-x64.exe"
 
 # Define the path for the installer
@@ -15,8 +15,8 @@ $installerPathBicep = "$installDirBicep\bicep-win-x64.exe"
 # Download the installer
 Invoke-WebRequest -Uri $installerUrlBicep -OutFile $installerPathBicep
 
-# Install Azure CLI
-Start-Process -FilePath msiexec.exe -ArgumentList "/i $installerPathBicep /quiet" -Wait
+# Install Bicep
+Start-Process -FilePath $installerPathBicep -ArgumentList "/S" -Wait
 
 # Clean up the installer file
 # Remove-Item -Path $installerPathBicep

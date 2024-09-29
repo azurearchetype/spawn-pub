@@ -23,3 +23,4 @@ Start-Process -FilePath msiexec.exe -ArgumentList "/i $installerPathBicep /quiet
 
 Write-Output "Bicep Extensions have been installed successfully in $installDirBicep"
 
+# End of script

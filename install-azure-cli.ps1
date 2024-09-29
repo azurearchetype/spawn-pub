@@ -23,6 +23,4 @@ Start-Process -FilePath msiexec.exe -ArgumentList "/i $installerPath /quiet" -Wa
 
 Write-Output "Azure CLI has been installed successfully in $installDir"
 
-
-# create local directory
-# New-Item -path "C:\AzureCLI" -ItemType Directory
+# End of script

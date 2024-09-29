@@ -1,6 +1,6 @@
 # Define the directory where Bicep will be installed
 $installDirBicep = "C:\Program Files\Bicep"
-OFILE
+
 # Create the directory if it doesn't exist
 if (-Not (Test-Path -Path $installDirBicep)) {
     New-Item -ItemType Directory -Path $installDirBicep

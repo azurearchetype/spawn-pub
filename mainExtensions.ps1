@@ -1,7 +1,7 @@
 # mainExtensions.ps1
 
-winget install --id Git.Git -e --source winget
-winget install --id Microsoft.AzureCLI -e --source winget -Wait
-az bicep install
+.\install-azure-cli.ps1
+.\install-bicep.ps1
+
 
 # Done installing core extensions

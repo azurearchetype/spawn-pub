@@ -19,7 +19,7 @@ Invoke-WebRequest -Uri $installerUrlBicep -OutFile $installerPathBicep
 $env:Path += ";$installDirBicep"
 [System.Environment]::SetEnvironmentVariable("PATH", $env:Path, [System.EnvironmentVariableTarget]::Machine)
 
-Write-Output "Directory added to PATH: $directoryToAdd"
+Write-Output "Directory added to PATH: $installDirBicep"
 Write-Output "Bicep Extensions have been installed successfully in $installDirBicep"
 
 # End of script

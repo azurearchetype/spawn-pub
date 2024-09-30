@@ -16,7 +16,7 @@ $installerPathGit = "$installDirGit\InstallGit.exe"
 Invoke-WebRequest -Uri $installerUrlGit -OutFile $installerPathGit
 
 #install Git
-Start-Process -FilePath $installerPathGit -ArgumentList "/S" -Wait
+Start-Process -FilePath $installerPathGit -ArgumentList "/SILENT" -Wait
 
 # Clean up the installer file
 # Remove-Item -Path $installerPathGit

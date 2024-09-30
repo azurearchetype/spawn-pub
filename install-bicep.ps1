@@ -15,6 +15,9 @@ $installerPathBicep = "$installDirBicep\bicep.exe"
 # Download the installer
 Invoke-WebRequest -Uri $installerUrlBicep -OutFile $installerPathBicep
 
+# Set Azure CLI to USe the Bicep binary from the system PATH
+az config set bicep.use_binary_from_path=true
+
 # Add the directory to the PATH environment variable
 # $env:Path += ";$installDirBicep"
 # [System.Environment]::SetEnvironmentVariable("PATH", $env:Path, [System.EnvironmentVariableTarget]::Machine)

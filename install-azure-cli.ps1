@@ -19,7 +19,7 @@ Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
 Start-Process -FilePath msiexec.exe -ArgumentList "/i $installerPath /quiet" -Wait
 
 # Set Azure CLI configuration
-Invoke-Expression "az config set bicep.use_binary_from_path=true"
+# Invoke-Expression "az config set bicep.use_binary_from_path=true"
 
 # Clean up the installer file
 # Remove-Item -Path $installerPath

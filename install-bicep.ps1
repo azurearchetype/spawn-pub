@@ -1,5 +1,5 @@
 # Define the directory where Bicep will be installed
-$installDirBicep = "C:\Program Files\Bicep"
+$installDirBicep = "C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin"
 
 # Create the directory if it doesn't exist
 if (-Not (Test-Path -Path $installDirBicep)) {
@@ -16,8 +16,8 @@ $installerPathBicep = "$installDirBicep\bicep.exe"
 Invoke-WebRequest -Uri $installerUrlBicep -OutFile $installerPathBicep
 
 # Add the directory to the PATH environment variable
-$env:Path += ";$installDirBicep"
-[System.Environment]::SetEnvironmentVariable("PATH", $env:Path, [System.EnvironmentVariableTarget]::Machine)
+# $env:Path += ";$installDirBicep"
+# [System.Environment]::SetEnvironmentVariable("PATH", $env:Path, [System.EnvironmentVariableTarget]::Machine)
 
 Write-Output "Directory added to PATH: $installDirBicep"
 Write-Output "Bicep Extensions have been installed successfully in $installDirBicep"

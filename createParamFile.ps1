@@ -1,3 +1,8 @@
+# Define the client ID of the system assigned managed identity
+$clientId = "fa348dc2-65a7-4ef6-a733-d81371f1a6e8"
+
+# Login to Azure using the system assigned managed identity
+az login --identity --username $clientId
 
 # Define the root directory from where the Azure Marketplace offer will be deployed
 $CreateDirAzmOffer = "C:\azmOffer"

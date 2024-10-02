@@ -17,7 +17,8 @@ $resourceGroup = "spawn"
 $deploymentName = "mainTemplate"
 
 # Retrieve the outputs
-Start-Process powershell -ArgumentList "$outputs = az deployment group show --resource-group $resourceGroup --name $deploymentName --query properties.outputs"
+Start-Process powershell -ArgumentList "-Command `"az deployment group show --resource-group $resourceGroup --name $deploymentName --query properties.outputs`""
+
 
 # Write outputs to a file on the VM
 $outputs | Out-File -FilePath "$CreateDirAzmOffer\parameters.json"

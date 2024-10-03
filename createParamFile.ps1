@@ -17,10 +17,25 @@ $resourceGroup = "spawn"
 $deploymentName = "mainTemplate"
 
 # Execute the command using Start-Process and capture the output
-$outputsJson = Start-Process -FilePath "az" -ArgumentList "deployment", "group", "show", "--resource-group", $resourceGroup, "--name", $deploymentName, "--query", "properties.outputs" -NoNewWindow -Wait -PassThru | Out-String
+$outputsJson = Start-Process -FilePath "az" -ArgumentList "deployment", "group", "show", "--resource-group", $resourceGroup, "--name", $deploymentName, "--query", "properties.outputs" -NoNewWindow -Wait -PassThru -RedirectStandardOutput "$CreateDirAzmOffer\output.txt" -RedirectStandardError "$CreateDirAzmOffer\error.txt"
+
+# Read the output and error files
+$outputsJson = Get-Content "$CreateDirAzmOffer\output.txt" -Raw
+$errorOutput = Get-Content "$CreateDirAzmOffer\error.txt" -Raw
+
+# Check if there is any error output
+if ($errorOutput) {
+    Write-Error "Error encountered: $errorOutput"
+    exit 1
+}
 
 # Convert the JSON output to a PowerShell object
-$outputs = $outputsJson | ConvertFrom-Json
+try {
+    $outputs = $outputsJson | ConvertFrom-Json
+} catch {
+    Write-Error "Failed to convert output to JSON. Output was: $outputsJson"
+    exit 1
+}
 
 # Prepare the parameters file structure
 $parameters = @{}

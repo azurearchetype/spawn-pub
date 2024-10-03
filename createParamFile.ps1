@@ -17,7 +17,7 @@ $resourceGroup = "spawn"
 $deploymentName = "mainTemplate"
 
 # Retrieve the outputs
-$outputs = az deployment group show --resource-group $resourceGroup --name $deploymentName --query properties.outputs
+Start-Process powershell -ArgumentList "-Command", "$outputs = az deployment group show --resource-group $resourceGroup --name $deploymentName --query properties.outputs"
 
 
 # Write outputs to a file on the VM

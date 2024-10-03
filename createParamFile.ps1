@@ -1,3 +1,6 @@
+#Pause for Azure CLI installation to complete
+Start-Sleep -Seconds 60
+
 # Define the client ID of the system assigned managed identity
 $clientId = "fa348dc2-65a7-4ef6-a733-d81371f1a6e8"
 

@@ -5,7 +5,7 @@ Start-Sleep -Seconds 60
 $clientId = "fa348dc2-65a7-4ef6-a733-d81371f1a6e8"
 
 # Login to Azure using the system assigned managed identity
-Start-Process powershell -ArgumentList "-Command", "az login --identity --username $clientId" -Wait
+Start-Process powershell -ArgumentList "-Command", "C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.exe login --identity --username $clientId" -Wait
 
 # Define the root directory from where the Azure Marketplace offer will be deployed
 $CreateDirAzmOffer = "C:\azmOffer"
@@ -20,7 +20,7 @@ $resourceGroup = "spawn"
 $deploymentName = "mainTemplate"
 
 # Execute the command using Start-Process and capture the output
-$outputsJson = Start-Process -FilePath "az" -ArgumentList "deployment", "group", "show", "--resource-group", $resourceGroup, "--name", $deploymentName, "--query", "properties.outputs" -NoNewWindow -Wait -PassThru -RedirectStandardOutput "$CreateDirAzmOffer\output.txt" -RedirectStandardError "$CreateDirAzmOffer\error.txt"
+$outputsJson = Start-Process -FilePath "C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.exe" -ArgumentList "deployment", "group", "show", "--resource-group", $resourceGroup, "--name", $deploymentName, "--query", "properties.outputs" -NoNewWindow -Wait -PassThru -RedirectStandardOutput "$CreateDirAzmOffer\output.txt" -RedirectStandardError "$CreateDirAzmOffer\error.txt"
 
 # Read the output and error files
 $outputsJson = Get-Content "$CreateDirAzmOffer\output.txt" -Raw

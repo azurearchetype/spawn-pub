@@ -2,7 +2,7 @@
 $clientId = "fa348dc2-65a7-4ef6-a733-d81371f1a6e8"
 
 # Login to Azure using the system assigned managed identity
-az login --identity --username $clientId
+Start-Process powershell -ArgumentList "-Command", "az login --identity --username $clientId"
 
 # Define the root directory from where the Azure Marketplace offer will be deployed
 $CreateDirAzmOffer = "C:\azmOffer"
@@ -17,7 +17,7 @@ $resourceGroup = "spawn"
 $deploymentName = "mainTemplate"
 
 # Retrieve the outputs
-Start-Process powershell -ArgumentList "-Command `"az deployment group show --resource-group $resourceGroup --name $deploymentName --query properties.outputs`""
+Start-Process powershell -ArgumentList "-Command", "az deployment group show --resource-group $resourceGroup --name $deploymentName --query properties.outputs"
 
 
 # Write outputs to a file on the VM

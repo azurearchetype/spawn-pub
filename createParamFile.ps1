@@ -2,7 +2,7 @@
 $clientId = "fa348dc2-65a7-4ef6-a733-d81371f1a6e8"
 
 # Login to Azure using the system assigned managed identity
-Start-Process powershell -ArgumentList "-Command", "az login --identity --username $clientId"
+Start-Process powershell -ArgumentList "-Command", "az login --identity --username $clientId" -Wait
 
 # Define the root directory from where the Azure Marketplace offer will be deployed
 $CreateDirAzmOffer = "C:\azmOffer"
@@ -16,21 +16,17 @@ if (-Not (Test-Path -Path $CreateDirAzmOffer)) {
 $resourceGroup = "spawn"
 $deploymentName = "mainTemplate"
 
-# Construct the command string
-$command = "az deployment group show --resource-group $resourceGroup --name $deploymentName --query properties.outputs"
-
-# Execute the command using Invoke-Expression and capture the output
-$outputsJson = Invoke-Expression $command
+# Execute the command using Start-Process and capture the output
+$outputsJson = Start-Process -FilePath "az" -ArgumentList "deployment", "group", "show", "--resource-group", $resourceGroup, "--name", $deploymentName, "--query", "properties.outputs" -NoNewWindow -Wait -PassThru | Out-String
 
 # Convert the JSON output to a PowerShell object
 $outputs = $outputsJson | ConvertFrom-Json
 
 # Prepare the parameters file structure
-$parameters = @{
-    "$schema" = "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
-    "contentVersion" = "1.0.0.0"
-    "parameters" = @{}
-}
+$parameters = @{}
+$parameters["$schema"] = "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
+$parameters["contentVersion"] = "1.0.0.0"
+$parameters["parameters"] = @{}
 
 # Populate the parameters section based on the outputs
 foreach ($output in $outputs.PSObject.Properties) {

@@ -1,4 +1,3 @@
-
 # Define the client ID of the system assigned managed identity
 $clientId = "fa348dc2-65a7-4ef6-a733-d81371f1a6e8"
 
@@ -6,7 +5,7 @@ $clientId = "fa348dc2-65a7-4ef6-a733-d81371f1a6e8"
 $azPath = "C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.cmd"
 
 # Login to Azure using the system assigned managed identity
-$arguments = @("-Command", "$azPath login --identity --username $clientId")
+$arguments = @("-Command", "& '$azPath' login --identity --username '$clientId'")
 Start-Process -FilePath "powershell" -ArgumentList $arguments -Wait 
 
 # Define the root directory from where the Azure Marketplace offer templates will be deployed
@@ -21,13 +20,16 @@ if (-Not (Test-Path -Path $CreateDirAzmOffer)) {
 $resourceGroup = "spawn"
 $deploymentName = "mainTemplate"
 
-# Execute the command using Start-Process
-Start-Process -FilePath "powershell" -ArgumentList "-Command", "$azPath deployment group show --resource-group $resourceGroup --name $deploymentName --query properties.outputs | Out-File -FilePath '$CreateDirAzmOffer\output.txt' 2> '$CreateDirAzmOffer\error.txt'" -PassThru
+# Execute the command and capture output and error
+$outputsJson = & "$azPath" deployment group show --resource-group $resourceGroup --name $deploymentName --query properties.outputs -o json 2> "$CreateDirAzmOffer\error.txt"
 
-# Check if there is any error output
-if ($errorOutput) {
-    Write-Error "Error encountered: $errorOutput"
-    exit 1
+# Check for error output
+if (Test-Path "$CreateDirAzmOffer\error.txt") {
+    $errorOutput = Get-Content "$CreateDirAzmOffer\error.txt" -Raw
+    if ($errorOutput) {
+        Write-Error "Error encountered: $errorOutput"
+        exit 1
+    }
 }
 
 # Convert the JSON output to a PowerShell object

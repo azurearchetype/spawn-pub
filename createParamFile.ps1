@@ -43,20 +43,23 @@ try {
 # Load the required assembly for ordered dictionaries
 Add-Type -AssemblyName System.Collections
 
-# Prepare the parameters file structure using OrderedDictionary
-$parameters = [ordered]@{
-    "$schema" = "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
-    "contentVersion" = "1.0.0.0"
-    "parameters" = [ordered]@{}  # Using ordered for parameters as well
+# Prepare the parameters file structure as a standard hashtable
+$parameters = @{
+    schema = "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
+    contentVersion = "1.0.0.0"
+    parameters = @{}  # Using a standard hashtable for parameters
 }
 
-# Populate the parameters section based on the outputs
+# Convert the parameters section to an ordered dictionary
+$parameters["parameters"] = New-Object -TypeName System.Collections.Specialized.OrderedDictionary
+
+# Populate the parameters based on the outputs
 foreach ($output in $outputs.PSObject.Properties) {
-    $parameters.parameters[$output.Name] = [ordered]@{
-        "type" = "String"
-        "value" = $output.Value
+    $parameters["parameters"][$output.Name] = @{
+        "type" = $output.Value.type
+        "value" = $output.Value.value
     }
 }
 
-# Write outputs to a file on the VM in Bicep parameters file format
+# Convert to JSON and output with compressed formatting
 $parameters | ConvertTo-Json -Depth 10 | Out-File -FilePath "$CreateDirAzmOffer\parameters.json"

@@ -5,9 +5,10 @@ Start-Sleep -Seconds 60
 $clientId = "fa348dc2-65a7-4ef6-a733-d81371f1a6e8"
 
 # Login to Azure using the system assigned managed identity
-Start-Process powershell -ArgumentList "-Command", "C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.exe login --identity --username $clientId" -Wait
+$arguments = @("-Command", "az login --identity --username $clientId")
+Start-Process -FilePath "powershell" -ArgumentList $arguments -Wait
 
-# Define the root directory from where the Azure Marketplace offer will be deployed
+# Define the root directory from where the Azure Marketplace offer templates will be deployed
 $CreateDirAzmOffer = "C:\azmOffer"
 
 # Create the directory if it doesn't exist
@@ -20,7 +21,7 @@ $resourceGroup = "spawn"
 $deploymentName = "mainTemplate"
 
 # Execute the command using Start-Process and capture the output
-$outputsJson = Start-Process -FilePath "C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.exe" -ArgumentList "deployment", "group", "show", "--resource-group", $resourceGroup, "--name", $deploymentName, "--query", "properties.outputs" -NoNewWindow -Wait -PassThru -RedirectStandardOutput "$CreateDirAzmOffer\output.txt" -RedirectStandardError "$CreateDirAzmOffer\error.txt"
+$outputsJson = Start-Process -FilePath "powershell" -ArgumentList "-Command", "az deployment group show --resource-group $resourceGroup --name $deploymentName --query properties.outputs | Out-File -FilePath '$CreateDirAzmOffer\output.txt' 2> '$CreateDirAzmOffer\error.txt'" -NoNewWindow -Wait -PassThru
 
 # Read the output and error files
 $outputsJson = Get-Content "$CreateDirAzmOffer\output.txt" -Raw

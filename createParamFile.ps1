@@ -41,11 +41,11 @@ try {
 }
 
 # Prepare the parameters file structure
-$parameters = @{}
-$parameters["$schema"] = "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
-$parameters["contentVersion"] = "1.0.0.0"
-$parameters["parameters"] = @{}
-
+$parameters = @{
+    "$schema" = "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
+    "contentVersion" = "1.0.0.0"
+    "parameters" = @{}
+}
 # Populate the parameters section based on the outputs
 foreach ($output in $outputs.PSObject.Properties) {
     $parameters.parameters[$output.Name] = @{

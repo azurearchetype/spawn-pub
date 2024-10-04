@@ -40,15 +40,20 @@ try {
     exit 1
 }
 
-# Prepare the parameters file structure
-$parameters = @{
+# Load the required assembly for ordered dictionaries
+Add-Type -AssemblyName System.Collections
+
+# Prepare the parameters file structure using OrderedDictionary
+$parameters = [ordered]@{
     "$schema" = "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
     "contentVersion" = "1.0.0.0"
-    "parameters" = @{}
+    "parameters" = [ordered]@{}  # Using ordered for parameters as well
 }
+
 # Populate the parameters section based on the outputs
 foreach ($output in $outputs.PSObject.Properties) {
-    $parameters.parameters[$output.Name] = @{
+    $parameters.parameters[$output.Name] = [ordered]@{
+        "type" = "String"
         "value" = $output.Value
     }
 }

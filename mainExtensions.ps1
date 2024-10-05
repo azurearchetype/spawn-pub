@@ -5,8 +5,3 @@
 .\install-git.ps1
 
 # Done installing core extensions
-
-# Write parameters file
-
-.\createParamFile.ps1
-
